@@ -5,15 +5,18 @@ import { buildBoard } from '../utils/buildBoard';
 import { revealNumber } from '../utils/revealNumber';
 import { useState, useEffect } from 'react';
 
-export default function Board( {onGameOver} ) {
+export default function Board( {onGameOver, n, m, minesNum} ) {
 
-const n = 9;
-const m = 9;
-const minesNum = 10;
+const initialBoard = buildBoard(n, m, minesNum);
     
-const [board, setBoard] = useState(buildBoard(n, m, minesNum));
+const [board, setBoard] = useState(initialBoard);
 
 const [minesLeft, setMinesLeft] = useState(minesNum);
+
+useEffect(() => {
+  setBoard(initialBoard); 
+  setMinesLeft(minesNum); 
+}, [n, m, minesNum]);
 
 //reveal
 function onLeftClick(x, y){
