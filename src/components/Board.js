@@ -5,13 +5,15 @@ import { buildBoard } from '../utils/buildBoard';
 import { revealNumber } from '../utils/revealNumber';
 import { useState, useEffect } from 'react';
 
-export default function Board( {onGameOver, n, m, minesNum} ) {
+export default function Board( {onGameOver, n, m, minesNum, setIsAfterFirstClick} ) {
 
 const initialBoard = buildBoard(n, m, minesNum);
     
 const [board, setBoard] = useState(initialBoard);
 
 const [minesLeft, setMinesLeft] = useState(minesNum);
+
+
 
 useEffect(() => {
   setBoard(initialBoard); 
@@ -20,6 +22,8 @@ useEffect(() => {
 
 //reveal
 function onLeftClick(x, y){
+
+  setIsAfterFirstClick(true);
 
   //if flagged - nothing happens. the user must remove the flag first, by right click.
 
@@ -62,6 +66,7 @@ function onRightClick(e, x, y) {
     e.preventDefault();
     let minusMine = 0;
 
+    setIsAfterFirstClick(true);
 
     setBoard((prevBoard) => {
       const newBoard = prevBoard.map((row) => [...row]); // Create a shallow copy of the board
